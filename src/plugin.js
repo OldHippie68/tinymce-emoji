@@ -21,6 +21,11 @@ const plugin = (editor) => {
     show_tab_icons = editor.settings.emoji_show_tab_icons;
   }
 
+  var show_group_name = true;
+  if ("emoji_show_group_name" in editor.settings) {
+    show_group_name = editor.settings.emoji_show_group_name;
+  }
+
   var emoji_dialog_height = 600;
   if ("emoji_dialog_height" in editor.settings) {
     emoji_dialog_height = parseInt(editor.settings.emoji_dialog_height, 10);
@@ -30,6 +35,12 @@ const plugin = (editor) => {
   if ("emoji_dialog_width" in editor.settings) {
     emoji_dialog_width = parseInt(editor.settings.emoji_dialog_width, 10);
   }
+
+  var emoji_close_on_insert = false;
+  if ("emoji_close_on_insert" in editor.settings) {
+    emoji_close_on_insert = editor.settings.emoji_close_on_insert;
+  }
+
 
   var getBody = new Promise((resolve, reject) => {
     try {
@@ -54,7 +65,7 @@ const plugin = (editor) => {
         if (show_groups) {
           body.push({
             type: 'container',
-            title: (show_tab_icons ? tabIcon + ' ' : '') + group.name,
+            title: (show_tab_icons ? tabIcon : '') + (show_group_name ? ' ' + group.name : ''),
             html: groupHtml,
             onclick: function (e) {
               var target = e.target;
@@ -63,6 +74,9 @@ const plugin = (editor) => {
                   let char = target.getAttribute('data-chr');
                   console.log(add_space);
                   editor.execCommand('mceInsertContent', false, char + (add_space ? ' ' : ''));
+                  if (emoji_close_on_insert) {
+                    editor.windowManager.close();
+                  }
                 }
               }
             }
@@ -81,6 +95,9 @@ const plugin = (editor) => {
                 let char = target.getAttribute('data-chr');
                 console.log(add_space);
                 editor.execCommand('mceInsertContent', false, char + (add_space ? ' ' : ''));
+                if (emoji_close_on_insert) {
+                  editor.windowManager.close();
+                }
               }
             }
           }
