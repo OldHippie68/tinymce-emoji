@@ -157,10 +157,13 @@ var plugin = function plugin(editor) {
                 for (var _iterator3 = subgroup.emojis[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
                   var emoji = _step3.value;
 
+                  if (emoji.status !== 'fully-qualified') {
+                    continue;
+                  }
                   if (tabIcon === '') {
                     tabIcon = emoji.emoji;
                   }
-                  groupHtml += '<span style="float:left; padding: 4px; font-size: 1.5em; cursor: pointer;" data-chr="' + emoji.emoji + '">' + emoji.emoji + '</span>';
+                  groupHtml += '<span style="float:left; text-align:center; padding: 4px; font-size: 1.5em; cursor: pointer; width: 40px; height: 25px;" data-chr="' + emoji.emoji + '">' + emoji.emoji + '</span>';
                 }
               } catch (err) {
                 _didIteratorError3 = true;
@@ -207,7 +210,7 @@ var plugin = function plugin(editor) {
                 if (/^(SPAN)$/.test(target.nodeName)) {
                   if (target.hasAttribute('data-chr')) {
                     var char = target.getAttribute('data-chr');
-                    console.log(add_space);
+                    //console.log(add_space);
                     editor.execCommand('mceInsertContent', false, char + (add_space ? ' ' : ''));
                     if (emoji_close_on_insert) {
                       editor.windowManager.close();
@@ -243,7 +246,7 @@ var plugin = function plugin(editor) {
             if (/^(SPAN)$/.test(target.nodeName)) {
               if (target.hasAttribute('data-chr')) {
                 var char = target.getAttribute('data-chr');
-                console.log(add_space);
+                //console.log(add_space);
                 editor.execCommand('mceInsertContent', false, char + (add_space ? ' ' : ''));
                 if (emoji_close_on_insert) {
                   editor.windowManager.close();
@@ -258,10 +261,6 @@ var plugin = function plugin(editor) {
       reject(error);
     }
   });
-
-  function getLoadingHtml() {
-    return '<img src="' + LoaderGIF + '" alt="Loading" />';
-  }
 
   function showDialog() {
     getBody.then(function (body) {
@@ -281,10 +280,18 @@ var plugin = function plugin(editor) {
         }]
       });
     }).then(function () {
+      // Remove extra spacing at bottom of emoji list
       var el = document.getElementById('start-icons-no-groups');
       if (el) {
         el.closest(".mce-container.mce-abs-layout-item.mce-first.mce-last").style.height = '100%';
         el.closest(".mce-container.mce-abs-layout-item.mce-first.mce-last").firstElementChild.style.height = '100%';
+      }
+      // Adjust padding in tabs
+      var tabs = document.getElementsByClassName("mce-tab");
+      if (tabs) {
+        for (var i = 0; i < tabs.length; i++) {
+          tabs[i].style.padding = '4px 15px 12px 15px';
+        }
       }
     }).catch(function (error) {
       console.log(error);

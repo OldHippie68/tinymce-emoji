@@ -52,10 +52,13 @@ const plugin = (editor) => {
         for (let subgroup of group.subGroups) {
             groupHtml += show_subgroups ? '<p style="clear:both"><strong>' + subgroup.name.split('-').join(' ').replace(/\b\w/g, l => l.toUpperCase()) + '</strong><br/>' : '';
           for (let emoji of subgroup.emojis) {
+            if (emoji.status !== 'fully-qualified') {
+              continue;
+            }
             if (tabIcon === '') {
               tabIcon = emoji.emoji;
             }
-            groupHtml += '<span style="float:left; padding: 4px; font-size: 1.5em; cursor: pointer;" data-chr="' + emoji.emoji + '">' + emoji.emoji + '</span>';
+            groupHtml += '<span style="float:left; text-align:center; padding: 4px; font-size: 1.5em; cursor: pointer; width: 40px; height: 25px;" data-chr="' + emoji.emoji + '">' + emoji.emoji + '</span>';
           }
           if (show_groups) {
             groupHtml += '</p>';
@@ -72,7 +75,7 @@ const plugin = (editor) => {
               if (/^(SPAN)$/.test(target.nodeName)) {
                 if (target.hasAttribute('data-chr')) {
                   let char = target.getAttribute('data-chr');
-                  console.log(add_space);
+                  //console.log(add_space);
                   editor.execCommand('mceInsertContent', false, char + (add_space ? ' ' : ''));
                   if (emoji_close_on_insert) {
                     editor.windowManager.close();
@@ -93,7 +96,7 @@ const plugin = (editor) => {
             if (/^(SPAN)$/.test(target.nodeName)) {
               if (target.hasAttribute('data-chr')) {
                 let char = target.getAttribute('data-chr');
-                console.log(add_space);
+                //console.log(add_space);
                 editor.execCommand('mceInsertContent', false, char + (add_space ? ' ' : ''));
                 if (emoji_close_on_insert) {
                   editor.windowManager.close();
@@ -109,10 +112,6 @@ const plugin = (editor) => {
     }
 
   });
-
-  function getLoadingHtml() {
-    return '<img src="' + LoaderGIF + '" alt="Loading" />';
-  }
 
   function showDialog() {
     getBody.then(body => {
@@ -132,12 +131,21 @@ const plugin = (editor) => {
         }]
       });
     }).then(() => {
+      // Remove extra spacing at bottom of emoji list
       let el = document.getElementById('start-icons-no-groups');
       if (el) {
         el.closest(".mce-container.mce-abs-layout-item.mce-first.mce-last").style.height = '100%';
         el.closest(".mce-container.mce-abs-layout-item.mce-first.mce-last").firstElementChild.style.height = '100%';
       }
-    }).catch(error => {
+      // Adjust padding in tabs
+      let tabs = document.getElementsByClassName("mce-tab");
+      if (tabs) {
+        for (let i = 0; i < tabs.length; i++) {
+          tabs[i].style.padding = '4px 15px 12px 15px';
+        }
+
+      }
+    }).catch((error) => {
       console.log(error);
     });
   }
