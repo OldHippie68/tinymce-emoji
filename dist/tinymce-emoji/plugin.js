@@ -11208,8 +11208,8 @@ var _plugin2 = _interopRequireDefault(_plugin);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-if (tinymce) {
-    tinymce.PluginManager.add('tinymceEmoji', _plugin2.default);
+if (typeof tinymce !== 'undefined') {
+  tinymce.PluginManager.add('tinymceEmoji', _plugin2.default);
 }
 
 /***/ })
