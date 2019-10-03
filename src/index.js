@@ -1,3 +1,4 @@
 import plugin from './plugin';
-
-tinymce.PluginManager.add('tinymceEmoji', plugin);
+if (tinymce) {
+    tinymce.PluginManager.add('tinymceEmoji', plugin);
+}

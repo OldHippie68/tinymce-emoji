@@ -11208,7 +11208,9 @@ var _plugin2 = _interopRequireDefault(_plugin);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-tinymce.PluginManager.add('tinymceEmoji', _plugin2.default);
+if (tinymce) {
+    tinymce.PluginManager.add('tinymceEmoji', _plugin2.default);
+}
 
 /***/ })
 /******/ ]);
