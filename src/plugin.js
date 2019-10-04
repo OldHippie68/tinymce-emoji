@@ -141,17 +141,19 @@ const plugin = (editor) => {
       let tabs = document.getElementsByClassName("mce-tab");
       if (tabs) {
         for (let i = 0; i < tabs.length; i++) {
-          tabs[i].style.padding = '1px 8px 25px 8px';
-          tabs[i].style.fontSize = '1.8em';
+          tabs[i].style.width = '39px';
+          tabs[i].style.padding = '2px 4px 20px 4px';
+          tabs[i].style.fontSize = '1.5em';
+          tabs[i].style.textAlign = 'center';
         }
       }
-    // Dark line under tabs      
+      // Dark line under tabs
       let tabsDiv = document.getElementsByClassName("mce-tabs");
       if (tabsDiv) {
-      for (let i = 0; i < tabsDiv.length; i++) {
+        for (let i = 0; i < tabsDiv.length; i++) {
           tabsDiv[i].style.borderBottom = '1px solid black';
-        }          
-      }      
+        }
+      }
     }).catch((error) => {
       console.log(error);
     });

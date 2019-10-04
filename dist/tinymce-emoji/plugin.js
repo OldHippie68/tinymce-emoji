@@ -290,11 +290,13 @@ var plugin = function plugin(editor) {
       var tabs = document.getElementsByClassName("mce-tab");
       if (tabs) {
         for (var i = 0; i < tabs.length; i++) {
-          tabs[i].style.padding = '1px 8px 25px 8px';
-          tabs[i].style.fontSize = '1.8em';
+          tabs[i].style.width = '39px';
+          tabs[i].style.padding = '2px 4px 20px 4px';
+          tabs[i].style.fontSize = '1.5em';
+          tabs[i].style.textAlign = 'center';
         }
       }
-      // Dark line under tabs      
+      // Dark line under tabs
       var tabsDiv = document.getElementsByClassName("mce-tabs");
       if (tabsDiv) {
         for (var _i = 0; _i < tabsDiv.length; _i++) {
