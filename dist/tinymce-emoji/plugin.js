@@ -290,7 +290,15 @@ var plugin = function plugin(editor) {
       var tabs = document.getElementsByClassName("mce-tab");
       if (tabs) {
         for (var i = 0; i < tabs.length; i++) {
-          tabs[i].style.padding = '4px 15px 12px 15px';
+          tabs[i].style.padding = '1px 8px 25px 8px';
+          tabs[i].style.fontSize = '1.8em';
+        }
+      }
+      // Dark line under tabs      
+      var tabsDiv = document.getElementsByClassName("mce-tabs");
+      if (tabsDiv) {
+        for (var _i = 0; _i < tabsDiv.length; _i++) {
+          tabsDiv[_i].style.borderBottom = '1px solid black';
         }
       }
     }).catch(function (error) {
