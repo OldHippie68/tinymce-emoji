@@ -55,7 +55,8 @@ const plugin = (editor) => {
             if (emoji.status !== 'fully-qualified') {
               continue;
             }
-            if (tabIcon === '') {
+            // Use first icon in subgroup or slightly smiling face
+            if (tabIcon === '' || emoji.codes[0] === '1F642') {
               tabIcon = emoji.emoji;
             }
             groupHtml += '<span style="float:left; text-align:center; padding: 4px; font-size: 1.5em; cursor: pointer; width: 40px; height: 25px;" data-chr="' + emoji.emoji + '">' + emoji.emoji + '</span>';
